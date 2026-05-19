@@ -12,12 +12,18 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ProfileService {
 
     public interface RoleCallback {
         void onSuccess(String role);
+        void onError(String error);
+    }
+
+    public interface CreateProfileCallback {
+        void onSuccess();
         void onError(String error);
     }
 
@@ -97,6 +103,62 @@ public class ProfileService {
                             callback.onError("Error procesando rol")
                     );
                 }
+            }
+        });
+    }
+
+    public static void createClientProfile(
+            String userId,
+            String accessToken,
+            String nombre,
+            String apellidos,
+            String telefono,
+            CreateProfileCallback callback
+    ) {
+
+        JsonObject json = new JsonObject();
+        json.addProperty("id", userId);
+        json.addProperty("nombre", nombre);
+        json.addProperty("apellidos", apellidos);
+        json.addProperty("telefono", telefono);
+        json.addProperty("rol", "cliente");
+
+        RequestBody body = RequestBody.create(
+                json.toString(),
+                SupabaseClient.JSON
+        );
+
+        Request request = new Request.Builder()
+                .url(SupabaseClient.SUPABASE_URL + "/rest/v1/perfiles")
+                .addHeader("apikey", SupabaseClient.SUPABASE_ANON_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
+                .post(body)
+                .build();
+
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnMainThread(() ->
+                        callback.onError("Error de conexión")
+                );
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                if (!response.isSuccessful()) {
+
+                    runOnMainThread(() ->
+                            callback.onError("No se pudo crear el perfil")
+                    );
+
+                    return;
+                }
+
+                runOnMainThread(callback::onSuccess);
             }
         });
     }

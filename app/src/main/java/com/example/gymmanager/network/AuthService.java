@@ -72,8 +72,62 @@ public class AuthService {
             }
         });
     }
+    public static void register(String email, String password, RegisterCallback callback) {
 
+        JsonObject json = new JsonObject();
+        json.addProperty("email", email);
+        json.addProperty("password", password);
+
+        RequestBody body = RequestBody.create(
+                json.toString(),
+                SupabaseClient.JSON
+        );
+
+        Request request = new Request.Builder()
+                .url(SupabaseClient.SUPABASE_URL + "/auth/v1/signup")
+                .addHeader("apikey", SupabaseClient.SUPABASE_ANON_KEY)
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnMainThread(() -> callback.onError("Error de conexión"));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseBody = response.body() != null ? response.body().string() : "";
+
+                if (!response.isSuccessful()) {
+                    runOnMainThread(() -> callback.onError("No se pudo crear la cuenta"));
+                    return;
+                }
+
+                try {
+                    JsonObject jsonResponse = JsonParser.parseString(responseBody).getAsJsonObject();
+
+                    String accessToken = jsonResponse.get("access_token").getAsString();
+                    String userId = jsonResponse
+                            .getAsJsonObject("user")
+                            .get("id")
+                            .getAsString();
+
+                    runOnMainThread(() -> callback.onSuccess(accessToken, userId));
+
+                } catch (Exception e) {
+                    runOnMainThread(() -> callback.onError("Error al procesar el registro"));
+                }
+            }
+        });
+    }
     private static void runOnMainThread(Runnable runnable) {
         new Handler(Looper.getMainLooper()).post(runnable);
+    }
+    public interface RegisterCallback {
+        void onSuccess(String accessToken, String userId);
+        void onError(String errorMessage);
     }
 }
