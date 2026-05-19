@@ -84,6 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "Rol no válido", Toast.LENGTH_SHORT).show();
                                     return;
                             }
+                            intent.putExtra("accessToken", accessToken);
+                            intent.putExtra("userId", userId);
 
                             startActivity(intent);
                             finish();
