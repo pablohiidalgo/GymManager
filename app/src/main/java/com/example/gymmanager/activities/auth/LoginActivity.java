@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gymmanager.R;
 import com.example.gymmanager.activities.client.ClientHomeActivity;
 import com.example.gymmanager.network.AuthService;
+import com.example.gymmanager.activities.admin.AdminHomeActivity;
+import com.example.gymmanager.activities.monitor.MonitorHomeActivity;
+import com.example.gymmanager.network.ProfileService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,12 +62,38 @@ public class LoginActivity extends AppCompatActivity {
                     btnLogin.setEnabled(true);
                     btnLogin.setText("Iniciar sesión");
 
-                    Toast.makeText(LoginActivity.this, "Login correcto", Toast.LENGTH_SHORT).show();
+                    ProfileService.getUserRole(userId, accessToken, new ProfileService.RoleCallback() {
+                        @Override
+                        public void onSuccess(String role) {
+                            Intent intent;
 
-                    // De momento lo mandamos al panel cliente para probar.
-                    Intent intent = new Intent(LoginActivity.this, ClientHomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                            switch (role) {
+                                case "admin":
+                                    intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
+                                    break;
+
+                                case "monitor":
+                                    intent = new Intent(LoginActivity.this, MonitorHomeActivity.class);
+                                    break;
+
+                                case "cliente":
+                                    intent = new Intent(LoginActivity.this, ClientHomeActivity.class);
+                                    break;
+
+                                default:
+                                    Toast.makeText(LoginActivity.this, "Rol no válido", Toast.LENGTH_SHORT).show();
+                                    return;
+                            }
+
+                            startActivity(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
                 @Override
