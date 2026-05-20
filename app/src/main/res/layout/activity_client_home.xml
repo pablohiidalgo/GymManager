@@ -20,6 +20,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="Cerrar sesión"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_button_primary"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:id="@+id/tvClientSubtitle"
@@ -65,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reserva tu plaza en las clases del gimnasio"
+                android:text="Reserva tu plaza en las clases"
                 android:textColor="#94A3B8"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"/>
@@ -94,16 +105,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Consulta tu historial de reservas y asistencias"
+                android:text="Consulta tus reservas"
                 android:textColor="#94A3B8"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/cardPayment"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="@drawable/bg_card_dark"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:padding="20dp">
@@ -119,7 +133,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Consulta y simula el pago de tu cuota"
+                android:text="Consulta y simula pagos"
                 android:textColor="#94A3B8"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"/>

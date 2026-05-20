@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,79 +14,66 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GymManager"
         tools:targetApi="31">
-
-        <!-- AUTH -->
+        <activity
+            android:name=".activities.admin.EditClassActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.admin.AdminStatsActivity"
+            android:exported="false" /> <!-- AUTH -->
         <activity
             android:name=".activities.auth.RegisterActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.auth.LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-        <!-- ADMIN -->
+        </activity> <!-- ADMIN -->
         <activity
             android:name=".activities.admin.AdminHomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.admin.ManageClientsActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.admin.ManageMonitorsActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.admin.ManageClassesActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.admin.ManageFeesActivity"
+            android:exported="false" /> <!-- MONITOR -->
+        <activity
+            android:name=".activities.monitor.MonitorClassesActivity"
             android:exported="false" />
-
-        <!-- MONITOR -->
         <activity
             android:name=".activities.monitor.MonitorHomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.monitor.AssignedClassesActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.monitor.AttendanceActivity"
-            android:exported="false" />
-
-        <!-- CLIENT -->
+            android:exported="false" /> <!-- CLIENT -->
         <activity
             android:name=".activities.client.ClientHomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.client.AvailableClassesActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.client.ReservationsActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.client.ProfileActivity"
             android:exported="false" />
-
         <activity
-            android:name=".activities.client.PaymentsActivity"
+            android:name=".activities.client.PaymentActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>
