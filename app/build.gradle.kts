@@ -42,4 +42,5 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(libs.okhttp)
     implementation(libs.gson)
+    implementation(libs.recyclerview)
 }

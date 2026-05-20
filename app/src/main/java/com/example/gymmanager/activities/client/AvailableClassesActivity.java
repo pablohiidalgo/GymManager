@@ -1,26 +1,65 @@
 package com.example.gymmanager.activities.client;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymmanager.R;
+import com.example.gymmanager.adapters.GymClassAdapter;
+import com.example.gymmanager.models.GymClass;
+import com.example.gymmanager.network.ClassService;
+
+import java.util.List;
 
 public class AvailableClassesActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerClasses;
+
+    private String accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_available_classes);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        accessToken = getIntent().getStringExtra("accessToken");
+
+        recyclerClasses = findViewById(R.id.recyclerClasses);
+
+        recyclerClasses.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+
+        loadClasses();
+    }
+
+    private void loadClasses() {
+
+        ClassService.getActiveClasses(
+                accessToken,
+                new ClassService.GetClassesCallback() {
+
+                    @Override
+                    public void onSuccess(List<GymClass> classes) {
+
+                        GymClassAdapter adapter =
+                                new GymClassAdapter(classes);
+
+                        recyclerClasses.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                        Toast.makeText(
+                                AvailableClassesActivity.this,
+                                error,
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                });
     }
 }

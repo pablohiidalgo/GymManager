@@ -43,10 +43,13 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/cardAvailableClasses"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_card_dark"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:padding="20dp">

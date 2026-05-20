@@ -12,7 +12,12 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import com.example.gymmanager.models.GymClass;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
+import java.util.List;
 public class ClassService {
 
     public interface CreateClassCallback {
@@ -67,7 +72,63 @@ public class ClassService {
             }
         });
     }
+    public interface GetClassesCallback {
+        void onSuccess(List<GymClass> classes);
+        void onError(String error);
+    }
+    public static void getActiveClasses(
+            String accessToken,
+            GetClassesCallback callback
+    ) {
+        Request request = new Request.Builder()
+                .url(SupabaseClient.SUPABASE_URL + "/rest/v1/clases?activa=eq.true&select=*")
+                .addHeader("apikey", SupabaseClient.SUPABASE_ANON_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .get()
+                .build();
 
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnMainThread(() -> callback.onError("Error de conexión"));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body() != null ? response.body().string() : "";
+
+                if (!response.isSuccessful()) {
+                    runOnMainThread(() -> callback.onError("No se pudieron cargar las clases"));
+                    return;
+                }
+
+                try {
+                    JsonArray array = JsonParser.parseString(responseBody).getAsJsonArray();
+                    List<GymClass> classes = new ArrayList<>();
+
+                    for (int i = 0; i < array.size(); i++) {
+                        JsonObject item = array.get(i).getAsJsonObject();
+
+                        GymClass gymClass = new GymClass(
+                                item.get("id").getAsString(),
+                                item.get("nombre").getAsString(),
+                                item.get("descripcion").getAsString(),
+                                item.get("horario").getAsString(),
+                                item.get("aforo_maximo").getAsInt()
+                        );
+
+                        classes.add(gymClass);
+                    }
+
+                    runOnMainThread(() -> callback.onSuccess(classes));
+
+                } catch (Exception e) {
+                    runOnMainThread(() -> callback.onError("Error procesando clases"));
+                }
+            }
+        });
+    }
     private static void runOnMainThread(Runnable runnable) {
         new Handler(Looper.getMainLooper()).post(runnable);
     }
