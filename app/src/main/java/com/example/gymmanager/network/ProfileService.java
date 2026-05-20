@@ -27,19 +27,15 @@ public class ProfileService {
         void onError(String error);
     }
 
-    public static void getUserRole(
-            String userId,
-            String accessToken,
-            RoleCallback callback
-    ) {
+    public interface CreateMemberCallback {
+        void onSuccess();
+        void onError(String error);
+    }
+
+    public static void getUserRole(String userId, String accessToken, RoleCallback callback) {
 
         Request request = new Request.Builder()
-                .url(
-                        SupabaseClient.SUPABASE_URL +
-                                "/rest/v1/perfiles?id=eq." +
-                                userId +
-                                "&select=rol"
-                )
+                .url(SupabaseClient.SUPABASE_URL + "/rest/v1/perfiles?id=eq." + userId + "&select=rol")
                 .addHeader("apikey", SupabaseClient.SUPABASE_ANON_KEY)
                 .addHeader("Authorization", "Bearer " + accessToken)
                 .addHeader("Content-Type", "application/json")
@@ -47,61 +43,35 @@ public class ProfileService {
                 .build();
 
         SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
-
             @Override
             public void onFailure(Call call, IOException e) {
-                runOnMainThread(() ->
-                        callback.onError("Error de conexión")
-                );
+                runOnMainThread(() -> callback.onError("Error de conexión"));
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
-                String responseBody =
-                        response.body() != null
-                                ? response.body().string()
-                                : "";
+                String responseBody = response.body() != null ? response.body().string() : "";
 
                 if (!response.isSuccessful()) {
-
-                    runOnMainThread(() ->
-                            callback.onError("Error al obtener rol")
-                    );
-
+                    runOnMainThread(() -> callback.onError("Error al obtener rol"));
                     return;
                 }
 
                 try {
-
-                    JsonArray array =
-                            JsonParser.parseString(responseBody)
-                                    .getAsJsonArray();
+                    JsonArray array = JsonParser.parseString(responseBody).getAsJsonArray();
 
                     if (array.size() == 0) {
-
-                        runOnMainThread(() ->
-                                callback.onError("Perfil no encontrado")
-                        );
-
+                        runOnMainThread(() -> callback.onError("Perfil no encontrado"));
                         return;
                     }
 
-                    JsonObject profile =
-                            array.get(0).getAsJsonObject();
+                    JsonObject profile = array.get(0).getAsJsonObject();
+                    String role = profile.get("rol").getAsString();
 
-                    String role =
-                            profile.get("rol").getAsString();
-
-                    runOnMainThread(() ->
-                            callback.onSuccess(role)
-                    );
+                    runOnMainThread(() -> callback.onSuccess(role));
 
                 } catch (Exception e) {
-
-                    runOnMainThread(() ->
-                            callback.onError("Error procesando rol")
-                    );
+                    runOnMainThread(() -> callback.onError("Error procesando rol"));
                 }
             }
         });
@@ -123,10 +93,7 @@ public class ProfileService {
         json.addProperty("telefono", telefono);
         json.addProperty("rol", "cliente");
 
-        RequestBody body = RequestBody.create(
-                json.toString(),
-                SupabaseClient.JSON
-        );
+        RequestBody body = RequestBody.create(json.toString(), SupabaseClient.JSON);
 
         Request request = new Request.Builder()
                 .url(SupabaseClient.SUPABASE_URL + "/rest/v1/perfiles")
@@ -138,23 +105,55 @@ public class ProfileService {
                 .build();
 
         SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
-
             @Override
             public void onFailure(Call call, IOException e) {
-                runOnMainThread(() ->
-                        callback.onError("Error de conexión")
-                );
+                runOnMainThread(() -> callback.onError("Error de conexión"));
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
                 if (!response.isSuccessful()) {
+                    runOnMainThread(() -> callback.onError("No se pudo crear el perfil"));
+                    return;
+                }
 
-                    runOnMainThread(() ->
-                            callback.onError("No se pudo crear el perfil")
-                    );
+                runOnMainThread(callback::onSuccess);
+            }
+        });
+    }
 
+    public static void createClientMember(
+            String userId,
+            String accessToken,
+            CreateMemberCallback callback
+    ) {
+
+        JsonObject json = new JsonObject();
+        json.addProperty("id", userId);
+        json.addProperty("estado_pago", "pagado");
+        json.addProperty("fecha_vencimiento", "2026-06-30");
+
+        RequestBody body = RequestBody.create(json.toString(), SupabaseClient.JSON);
+
+        Request request = new Request.Builder()
+                .url(SupabaseClient.SUPABASE_URL + "/rest/v1/socios")
+                .addHeader("apikey", SupabaseClient.SUPABASE_ANON_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
+                .post(body)
+                .build();
+
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnMainThread(() -> callback.onError("Error de conexión"));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    runOnMainThread(() -> callback.onError("No se pudo crear el socio"));
                     return;
                 }
 

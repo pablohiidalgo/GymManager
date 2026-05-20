@@ -19,6 +19,7 @@ public class AvailableClassesActivity extends AppCompatActivity {
     private RecyclerView recyclerClasses;
 
     private String accessToken;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +27,10 @@ public class AvailableClassesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_available_classes);
 
         accessToken = getIntent().getStringExtra("accessToken");
+        userId = getIntent().getStringExtra("userId");
 
         recyclerClasses = findViewById(R.id.recyclerClasses);
-
-        recyclerClasses.setLayoutManager(
-                new LinearLayoutManager(this)
-        );
+        recyclerClasses.setLayoutManager(new LinearLayoutManager(this));
 
         loadClasses();
     }
@@ -45,15 +44,16 @@ public class AvailableClassesActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(List<GymClass> classes) {
 
-                        GymClassAdapter adapter =
-                                new GymClassAdapter(classes);
+                        GymClassAdapter adapter = new GymClassAdapter(
+                                classes,
+                                gymClass -> reserveClass(gymClass)
+                        );
 
                         recyclerClasses.setAdapter(adapter);
                     }
 
                     @Override
                     public void onError(String error) {
-
                         Toast.makeText(
                                 AvailableClassesActivity.this,
                                 error,
@@ -61,5 +61,34 @@ public class AvailableClassesActivity extends AppCompatActivity {
                         ).show();
                     }
                 });
+    }
+
+    private void reserveClass(GymClass gymClass) {
+
+        ClassService.reserveClass(
+                accessToken,
+                gymClass.getId(),
+                userId,
+                new ClassService.ReserveClassCallback() {
+
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(
+                                AvailableClassesActivity.this,
+                                "Reserva realizada correctamente",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(
+                                AvailableClassesActivity.this,
+                                error,
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        );
     }
 }

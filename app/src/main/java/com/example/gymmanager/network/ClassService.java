@@ -129,6 +129,146 @@ public class ClassService {
             }
         });
     }
+    public static void reserveClass(
+            String accessToken,
+            String classId,
+            String userId,
+            ReserveClassCallback callback
+    ) {
+
+        JsonObject json = new JsonObject();
+        json.addProperty("clase_id", classId);
+        json.addProperty("socio_id", userId);
+        json.addProperty("asistio", false);
+
+        RequestBody body = RequestBody.create(
+                json.toString(),
+                SupabaseClient.JSON
+        );
+
+        Request request = new Request.Builder()
+                .url(SupabaseClient.SUPABASE_URL + "/rest/v1/reservas")
+                .addHeader("apikey", SupabaseClient.SUPABASE_ANON_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
+                .post(body)
+                .build();
+
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnMainThread(() ->
+                        callback.onError("Error de conexión")
+                );
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                if (!response.isSuccessful()) {
+
+                    runOnMainThread(() ->
+                            callback.onError("No se pudo reservar")
+                    );
+
+                    return;
+                }
+
+                runOnMainThread(callback::onSuccess);
+            }
+        });
+    }
+    public interface ReserveClassCallback {
+        void onSuccess();
+        void onError(String error);
+    }
+    public static void getUserReservations(
+            String accessToken,
+            String userId,
+            GetClassesCallback callback
+    ) {
+
+        Request request = new Request.Builder()
+                .url(
+                        SupabaseClient.SUPABASE_URL +
+                                "/rest/v1/reservas" +
+                                "?socio_id=eq." + userId +
+                                "&select=clases(*)"
+                )
+                .addHeader("apikey", SupabaseClient.SUPABASE_ANON_KEY)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .get()
+                .build();
+
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnMainThread(() ->
+                        callback.onError("Error de conexión")
+                );
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseBody =
+                        response.body() != null
+                                ? response.body().string()
+                                : "";
+
+                if (!response.isSuccessful()) {
+
+                    runOnMainThread(() ->
+                            callback.onError("No se pudieron cargar reservas")
+                    );
+
+                    return;
+                }
+
+                try {
+
+                    JsonArray array =
+                            JsonParser.parseString(responseBody)
+                                    .getAsJsonArray();
+
+                    List<GymClass> classes = new ArrayList<>();
+
+                    for (int i = 0; i < array.size(); i++) {
+
+                        JsonObject reserva =
+                                array.get(i).getAsJsonObject();
+
+                        JsonObject clase =
+                                reserva.getAsJsonObject("clases");
+
+                        GymClass gymClass = new GymClass(
+                                clase.get("id").getAsString(),
+                                clase.get("nombre").getAsString(),
+                                clase.get("descripcion").getAsString(),
+                                clase.get("horario").getAsString(),
+                                clase.get("aforo_maximo").getAsInt()
+                        );
+
+                        classes.add(gymClass);
+                    }
+
+                    runOnMainThread(() ->
+                            callback.onSuccess(classes)
+                    );
+
+                } catch (Exception e) {
+
+                    runOnMainThread(() ->
+                            callback.onError("Error procesando reservas")
+                    );
+                }
+            }
+        });
+    }
     private static void runOnMainThread(Runnable runnable) {
         new Handler(Looper.getMainLooper()).post(runnable);
     }

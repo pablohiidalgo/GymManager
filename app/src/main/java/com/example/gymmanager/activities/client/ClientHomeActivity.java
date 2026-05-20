@@ -10,7 +10,7 @@ import com.example.gymmanager.R;
 
 public class ClientHomeActivity extends AppCompatActivity {
 
-    private LinearLayout cardAvailableClasses;
+    private LinearLayout cardAvailableClasses, cardReservations;
     private String accessToken;
     private String userId;
 
@@ -23,9 +23,17 @@ public class ClientHomeActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra("userId");
 
         cardAvailableClasses = findViewById(R.id.cardAvailableClasses);
+        cardReservations = findViewById(R.id.cardReservations);
 
         cardAvailableClasses.setOnClickListener(v -> {
             Intent intent = new Intent(ClientHomeActivity.this, AvailableClassesActivity.class);
+            intent.putExtra("accessToken", accessToken);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+        });
+
+        cardReservations.setOnClickListener(v -> {
+            Intent intent = new Intent(ClientHomeActivity.this, ReservationsActivity.class);
             intent.putExtra("accessToken", accessToken);
             intent.putExtra("userId", userId);
             startActivity(intent);
