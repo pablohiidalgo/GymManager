@@ -11,6 +11,7 @@ import com.example.gymmanager.R;
 import com.example.gymmanager.adapters.AttendanceAdapter;
 import com.example.gymmanager.models.Reservation;
 import com.example.gymmanager.network.ClassService;
+import com.example.gymmanager.utils.AnimationHelper;
 
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class AttendanceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
-
+        AnimationHelper.applyOpenTransition(this);
+        AnimationHelper.fadeIn(findViewById(android.R.id.content));
         accessToken = getIntent().getStringExtra("accessToken");
         classId = getIntent().getStringExtra("classId");
 

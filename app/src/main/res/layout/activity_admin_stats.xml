@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_screen_dark">
+    android:background="@drawable/bg_screen_dark"
+    tools:context=".activities.admin.AdminStatsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,9 +16,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estadísticas"
+            android:text="Dashboard"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textSize="32sp"
             android:textStyle="bold"
             android:layout_marginTop="26dp"/>
 
@@ -30,81 +32,162 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="145dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/bg_card_blue"
-            android:gravity="center"
+            android:elevation="12dp"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="18dp">
+            android:padding="26dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Usuarios registrados"
+                android:text="Ingresos mensuales"
                 android:textColor="#DBEAFE"
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/tvTotalUsers"
+                android:id="@+id/tvMonthlyIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
+                android:text="4.250€"
                 android:textColor="#FFFFFF"
                 android:textSize="44sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"/>
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/bg_card_dark_stroke"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="18dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Clases activas"
-                android:textColor="#94A3B8"
-                android:textSize="16sp"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_stat_green"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvTotalClasses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="#FFFFFF"
-                android:textSize="44sp"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usuarios"
+                    android:textColor="#DCFCE7"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalUsers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_stat_orange"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clases"
+                    android:textColor="#FEF3C7"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalClasses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:background="@drawable/bg_card_dark_stroke"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="18dp">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reservas realizadas"
-                android:textColor="#94A3B8"
-                android:textSize="16sp"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_stat_purple"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvTotalReservations"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="#FFFFFF"
-                android:textSize="44sp"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reservas"
+                    android:textColor="#EDE9FE"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalReservations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_stat_red"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ocupación"
+                    android:textColor="#FEE2E2"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvOccupancy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="78%"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>

@@ -14,6 +14,7 @@ import com.example.gymmanager.R;
 import com.example.gymmanager.adapters.AdminClassAdapter;
 import com.example.gymmanager.models.GymClass;
 import com.example.gymmanager.network.ClassService;
+import com.example.gymmanager.utils.AnimationHelper;
 
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class ManageClassesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_classes);
-
+        AnimationHelper.applyOpenTransition(this);
+        AnimationHelper.fadeIn(findViewById(android.R.id.content));
         accessToken = getIntent().getStringExtra("accessToken");
         userId = getIntent().getStringExtra("userId");
 

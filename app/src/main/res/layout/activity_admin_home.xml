@@ -48,6 +48,7 @@
     <LinearLayout
         android:id="@+id/cardSummary"
         android:layout_width="0dp"
+        android:elevation="8dp"
         android:layout_height="130dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_card_blue"
@@ -89,6 +90,7 @@
             android:id="@+id/cardManageClasses"
             android:layout_width="match_parent"
             android:layout_height="112dp"
+            android:elevation="8dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_card_dark_stroke"
             android:clickable="true"
@@ -120,6 +122,7 @@
             android:layout_height="112dp"
             android:background="@drawable/bg_card_dark_stroke"
             android:clickable="true"
+            android:elevation="8dp"
             android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"

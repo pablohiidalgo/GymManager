@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gymmanager.R;
 import com.example.gymmanager.network.ProfileService;
+import com.example.gymmanager.utils.AnimationHelper;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -29,7 +30,8 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-
+        AnimationHelper.applyOpenTransition(this);
+        AnimationHelper.fadeIn(findViewById(android.R.id.content));
         accessToken = getIntent().getStringExtra("accessToken");
         userId = getIntent().getStringExtra("userId");
 

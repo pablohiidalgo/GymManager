@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gymmanager.LoginActivity;
 import com.example.gymmanager.R;
+import com.example.gymmanager.utils.AnimationHelper;
 import com.example.gymmanager.utils.SessionManager;
 
 public class ClientHomeActivity extends AppCompatActivity {
@@ -27,7 +28,8 @@ public class ClientHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_home);
-
+        AnimationHelper.applyOpenTransition(this);
+        AnimationHelper.fadeIn(findViewById(android.R.id.content));
         accessToken = getIntent().getStringExtra("accessToken");
         userId = getIntent().getStringExtra("userId");
 

@@ -47,6 +47,7 @@
 
     <LinearLayout
         android:id="@+id/cardSummary"
+        android:elevation="8dp"
         android:layout_width="0dp"
         android:layout_height="130dp"
         android:layout_marginTop="30dp"
@@ -78,6 +79,7 @@
     <LinearLayout
         android:id="@+id/layoutClientCards"
         android:layout_width="0dp"
+        android:elevation="8dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="26dp"
@@ -117,6 +119,7 @@
         <LinearLayout
             android:id="@+id/cardReservations"
             android:layout_width="match_parent"
+            android:elevation="8dp"
             android:layout_height="112dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_card_dark_stroke"
@@ -146,6 +149,7 @@
         <LinearLayout
             android:id="@+id/cardPayment"
             android:layout_width="match_parent"
+            android:elevation="8dp"
             android:layout_height="112dp"
             android:background="@drawable/bg_card_dark_stroke"
             android:clickable="true"
@@ -173,6 +177,7 @@
         <LinearLayout
             android:id="@+id/cardProfile"
             android:layout_width="match_parent"
+            android:elevation="8dp"
             android:layout_height="112dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_card_dark_stroke"

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gymmanager.R;
 import com.example.gymmanager.models.AdminStats;
 import com.example.gymmanager.network.ProfileService;
+import com.example.gymmanager.utils.AnimationHelper;
 
 public class AdminStatsActivity extends AppCompatActivity {
 
@@ -22,7 +23,8 @@ public class AdminStatsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_stats);
-
+        AnimationHelper.applyOpenTransition(this);
+        AnimationHelper.fadeIn(findViewById(android.R.id.content));
         accessToken = getIntent().getStringExtra("accessToken");
 
         tvTotalUsers = findViewById(R.id.tvTotalUsers);

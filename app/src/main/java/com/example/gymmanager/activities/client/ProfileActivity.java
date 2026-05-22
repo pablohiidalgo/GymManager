@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.gymmanager.R;
+import com.example.gymmanager.utils.AnimationHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,7 +40,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        AnimationHelper.applyOpenTransition(this);
+        AnimationHelper.fadeIn(findViewById(android.R.id.content));
         preferences = getSharedPreferences("profile_prefs", Context.MODE_PRIVATE);
 
         imgProfile = findViewById(R.id.imgProfile);
