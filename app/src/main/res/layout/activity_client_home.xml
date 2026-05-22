@@ -170,6 +170,34 @@
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"/>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cardProfile"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card_dark_stroke"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mi perfil"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Foto de perfil y datos personales"
+                android:textColor="#94A3B8"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
