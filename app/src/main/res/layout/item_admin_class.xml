@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="14dp"
-    android:background="@drawable/bg_card_dark"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_card_dark_stroke"
     android:orientation="vertical"
-    android:padding="18dp">
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/tvAdminClassName"
@@ -14,32 +14,32 @@
         android:layout_height="wrap_content"
         android:text="Nombre clase"
         android:textColor="#FFFFFF"
-        android:textSize="21sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvAdminClassSchedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Horario"
         android:textColor="#60A5FA"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/tvAdminClassCapacity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:text="Aforo máximo"
         android:textColor="#CBD5E1"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:layout_marginTop="5dp" />
 
     <Button
         android:id="@+id/btnEditClass"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_button_primary"
         android:text="Editar clase"
         android:textAllCaps="false"

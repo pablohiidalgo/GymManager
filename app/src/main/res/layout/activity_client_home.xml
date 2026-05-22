@@ -5,65 +5,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1120"
-    android:padding="20dp"
+    android:background="@drawable/bg_screen_dark"
+    android:padding="22dp"
     tools:context=".activities.client.ClientHomeActivity">
 
     <TextView
         android:id="@+id/tvClientTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Panel de Cliente"
+        android:text="Panel Cliente"
         android:textColor="#FFFFFF"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"/>
+        app:layout_constraintEnd_toStartOf="@id/btnLogout"
+        android:layout_marginTop="26dp"/>
+
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:text="Cerrar sesión"
+        android:layout_height="46dp"
+        android:background="@drawable/bg_button_logout"
+        android:text="Salir"
         android:textAllCaps="false"
-        android:background="@drawable/bg_button_primary"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:textColor="#CBD5E1"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="@id/tvClientTitle"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/tvClientSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Consulta tus clases, reservas y cuotas"
+        android:text="Reserva clases y consulta tu cuota"
         android:textColor="#94A3B8"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@id/tvClientTitle"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/cardSummary"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_card_blue"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="22dp"
+        app:layout_constraintTop_toBottomOf="@id/tvClientSubtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gestiona tu actividad en el gimnasio"
+            android:textColor="#DBEAFE"
+            android:textSize="15sp"
+            android:layout_marginTop="6dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutClientCards"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="36dp"
-        app:layout_constraintTop_toBottomOf="@id/tvClientSubtitle"
+        android:layout_marginTop="26dp"
+        app:layout_constraintTop_toBottomOf="@id/cardSummary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:id="@+id/cardAvailableClasses"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="112dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_card_dark"
+            android:background="@drawable/bg_card_dark_stroke"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="22dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,7 +108,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reserva tu plaza en las clases"
+                android:text="Reserva tu plaza en una clase"
                 android:textColor="#94A3B8"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"/>
@@ -85,14 +117,14 @@
         <LinearLayout
             android:id="@+id/cardReservations"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="112dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_card_dark"
+            android:background="@drawable/bg_card_dark_stroke"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="22dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,7 +137,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Consulta tus reservas"
+                android:text="Consulta tus clases reservadas"
                 android:textColor="#94A3B8"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"/>
@@ -114,13 +146,13 @@
         <LinearLayout
             android:id="@+id/cardPayment"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:background="@drawable/bg_card_dark"
+            android:layout_height="112dp"
+            android:background="@drawable/bg_card_dark_stroke"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="22dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -133,7 +165,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Consulta y simula pagos"
+                android:text="Consulta y simula el pago"
                 android:textColor="#94A3B8"
                 android:textSize="14sp"
                 android:layout_marginTop="6dp"/>

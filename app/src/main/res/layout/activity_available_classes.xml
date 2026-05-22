@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1120"
-    android:padding="20dp"
+    android:background="@drawable/bg_screen_dark"
+    android:padding="22dp"
     tools:context=".activities.client.AvailableClassesActivity">
 
     <TextView
@@ -15,22 +15,22 @@
         android:layout_height="wrap_content"
         android:text="Clases disponibles"
         android:textColor="#FFFFFF"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="26dp"/>
 
     <TextView
         android:id="@+id/tvAvailableClassesSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reserva tu plaza en el gimnasio"
+        android:text="Elige una clase y reserva tu plaza"
         android:textColor="#94A3B8"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@id/tvAvailableClassesTitle"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginTop="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerClasses"

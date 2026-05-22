@@ -24,7 +24,7 @@
             android:name=".activities.auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.auth.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
