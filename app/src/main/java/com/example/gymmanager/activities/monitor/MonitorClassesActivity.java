@@ -9,10 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymmanager.R;
-import com.example.gymmanager.adapters.GymClassAdapter;
+import com.example.gymmanager.adapters.MonitorClassAdapter;
 import com.example.gymmanager.models.GymClass;
 import com.example.gymmanager.network.ClassService;
-import com.example.gymmanager.utils.AnimationHelper;
 
 import java.util.List;
 
@@ -26,60 +25,41 @@ public class MonitorClassesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor_classes);
-        AnimationHelper.applyOpenTransition(this);
-        AnimationHelper.fadeIn(findViewById(android.R.id.content));
+
         accessToken = getIntent().getStringExtra("accessToken");
 
-        recyclerMonitorClasses =
-                findViewById(R.id.recyclerMonitorClasses);
-
-        recyclerMonitorClasses.setLayoutManager(
-                new LinearLayoutManager(this)
-        );
+        recyclerMonitorClasses = findViewById(R.id.recyclerMonitorClasses);
+        recyclerMonitorClasses.setLayoutManager(new LinearLayoutManager(this));
 
         loadClasses();
     }
 
     private void loadClasses() {
-
         ClassService.getActiveClasses(
                 accessToken,
                 new ClassService.GetClassesCallback() {
-
                     @Override
                     public void onSuccess(List<GymClass> classes) {
+                        MonitorClassAdapter adapter = new MonitorClassAdapter(
+                                classes,
+                                gymClass -> {
+                                    Intent intent = new Intent(
+                                            MonitorClassesActivity.this,
+                                            AttendanceActivity.class
+                                    );
 
-                        GymClassAdapter adapter =
-                                new GymClassAdapter(
-                                        classes,
-                                        gymClass -> {
+                                    intent.putExtra("accessToken", accessToken);
+                                    intent.putExtra("classId", gymClass.getId());
 
-                                            Intent intent =
-                                                    new Intent(
-                                                            MonitorClassesActivity.this,
-                                                            AttendanceActivity.class
-                                                    );
-
-                                            intent.putExtra(
-                                                    "accessToken",
-                                                    accessToken
-                                            );
-
-                                            intent.putExtra(
-                                                    "classId",
-                                                    gymClass.getId()
-                                            );
-
-                                            startActivity(intent);
-                                        }
-                                );
+                                    startActivity(intent);
+                                }
+                        );
 
                         recyclerMonitorClasses.setAdapter(adapter);
                     }
 
                     @Override
                     public void onError(String error) {
-
                         Toast.makeText(
                                 MonitorClassesActivity.this,
                                 error,
